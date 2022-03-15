@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Module {
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String
+  type        String
+  status      Boolean       @default(true)
+  createddate DateTime      @default(now())
+  updateddate DateTime?
+  modulestate Modulestate[]
+}
+
+model Modulestate {
+  id                  Int              @id @default(autoincrement())
+  moduleid            Int
+  temprature          Int              @default(0)
+  schedule_timestart  DateTime
+  schedule_timeend    DateTime
+  operating_condition Boolean          @default(true)
+  createddate         DateTime         @default(now())
+  updateddate         DateTime?
+  module              Module           @relation(fields: [moduleid], references: [id], onDelete: Cascade)
+  modulestatelog      Modulestatelog[]
+}
+
+model Modulestatelog {
+  id                  Int         @id @default(autoincrement())
+  modulestateid       Int
+  running_timestart   DateTime
+  running_timeend     DateTime?
+  status              Boolean     @default(true)
+  createddate         DateTime    @default(now())
+  modulestate         Modulestate @relation(fields: [modulestateid], references: [id], onDelete: Cascade)
+}
