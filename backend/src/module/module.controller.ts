@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ModuleService } from './module.service';
 import { CreateModuleDto } from './dto/create-module.dto';
 import { UpdateModuleDto } from './dto/update-module.dto';
+import {PrismaService} from 'src/prisma/prisma.service';
+
 
 @Controller('module')
 export class ModuleController {

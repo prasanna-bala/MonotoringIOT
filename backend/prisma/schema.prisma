@@ -12,10 +12,10 @@ datasource db {
 
 model Module {
   id          Int           @id @default(autoincrement())
-  name        String
+  modulename        String
   description String
   type        String
-  status      Boolean       @default(true)
+  modstatus   Boolean       @default(true)
   createddate DateTime      @default(now())
   updateddate DateTime?
   modulestate Modulestate[]

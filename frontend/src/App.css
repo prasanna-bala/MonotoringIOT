@@ -36,7 +36,36 @@
     transform: rotate(360deg);
   }
 }
+ 
+.h2{
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display:grid;
+}
+.tablemodule{
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display:grid;
 
-button {
-  font-size: calc(10px + 2vmin);
+}
+.tablemodule left{
+  align-items:right;
+  justify-content: right;
+}
+.tablemodule right{
+  align-items:left;
+  justify-content: left;
+}
+.wrapper {
+  padding: 5px 20px;
+}
+
+.wrapper fieldset {
+  margin: 20px 0;
 }
