@@ -1,23 +1,25 @@
- 
-import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Layout from "../src/components/Layout";
+import Home from "../src/components/Home";
+import Module from "../src/components/Module";/* 
+import Moduledetails from '../src/components/Moduledetails'; */
+import Navbar from "../src/components/Navbar";
 
-import Layout from "./pages/Layout";
-import Home from "./pages/Home";
-import Module from "./pages/Module";
 import "./App.css"; 
 
 
 export default function App() {
 	return (
-	  <BrowserRouter>
+ 
+ 	  <BrowserRouter>
+	  	<Navbar />
 		<Routes>
-		 	<Route path="/" element={<Layout />}>
-			<Route index element={<Home />} />
-			<Route path="Module" element={<Module />} /> 
-		  </Route>
+		 	<Route exact="true" path="/Home" element={<Home />}/>
+			<Route exact="true" path="/Layout" element={<Layout />}/>
+			<Route exact="true" path="/Module" element={<Module />} /> 
+		
 		</Routes>
-	  </BrowserRouter>
+	  </BrowserRouter> 
 	);
   }
   

@@ -3,7 +3,7 @@ import { IsString,IsNumber,IsDate } from 'class-validator';
 export class CreateModuleDto {
  
     @IsString()
-    name: string;
+    modulename: string;
 
     @IsString()
     description: string;

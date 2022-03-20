@@ -1,71 +1,142 @@
-.App {
-  text-align: center;
+ 
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  background: #ffa0ad;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navMenu {
+  list-style-type: none;
+  background: #ffa0ad;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.items {
+  margin-right: 20px;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #7F5056;
+  cursor: pointer;
+}
+
+
+
+.navbar-logo {
+  color: #161515;
+  justify-self: start;
+  margin-left: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  font: size 2rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+@media screen and (max-width: 500px) {
+  .list {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .items:nth-child(1) {
+    border-top: 1px solid rgba(255, 255, 255, 0.555);
+    margin-top: 50px;
+  }
+
+  .items {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.555);
+    text-align: center;
+    margin-right: 0px;
+    padding: 20px 0;
+  }
+
+  .btn {
+    display: block;
+  }
+}
+@media screen and (min-width: 700px) {
+  .btn {
+    display: none;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navMenu {
+  width: 100%;
+  background-color: #555;
+  overflow: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 2px;
+	margin-bottom: 5px;
+	height: 100px;
+	list-style: none;
+	background-color: #555;
+}
+.navItems {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	border-bottom: 2px solid transparent;
+	color: #250e0e;
+} 
+
+
+.app-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 10px;
+  padding: 1rem;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
- 
-.h2{
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  display:grid;
-}
 .tablemodule{
-  font-family: arial, sans-serif;
+position: center;
+margin-left: 15px;
+}
+table {
   border-collapse: collapse;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  display:grid;
-
-}
-.tablemodule left{
-  align-items:right;
-  justify-content: right;
-}
-.tablemodule right{
-  align-items:left;
-  justify-content: left;
-}
-.wrapper {
-  padding: 5px 20px;
+  align-items: justify;
+  padding: 8px;
+  width: 90%;
+  position: relative;
 }
 
-.wrapper fieldset {
-  margin: 20px 0;
+th,
+td {
+  border: 1px solid #241e1e;
+  text-align: center;
+  padding: 8px;
+  font-size: 32px;
+}
+
+th {
+  background-color: rgb(118, 153, 173);
+}
+
+td {
+  background-color: rgb(80, 95, 105);
+}
+
+form {
+  display: flex;
+  gap: 5px;
+}
+
+form td:last-child {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+form * {
+  font-size: 28px;
 }

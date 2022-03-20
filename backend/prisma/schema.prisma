@@ -11,8 +11,8 @@ datasource db {
 }
 
 model Module {
-  id          Int           @id @default(autoincrement())
-  modulename        String
+  moduleid          Int           @id @default(autoincrement())
+  modulename  String
   description String
   type        String
   modstatus   Boolean       @default(true)
@@ -22,24 +22,26 @@ model Module {
 }
 
 model Modulestate {
-  id                  Int              @id @default(autoincrement())
+  modulestateid                  Int              @id @default(autoincrement())
   moduleid            Int
-  temprature          Int              @default(0)
+  typemins            Int?
+  typemax             Int              @default(0)
   schedule_timestart  DateTime
   schedule_timeend    DateTime
   operating_condition Boolean          @default(true)
   createddate         DateTime         @default(now())
   updateddate         DateTime?
-  module              Module           @relation(fields: [moduleid], references: [id], onDelete: Cascade)
+  module              Module           @relation(fields: [moduleid], references: [moduleid], onDelete: Cascade)
   modulestatelog      Modulestatelog[]
 }
 
 model Modulestatelog {
-  id                  Int         @id @default(autoincrement())
+  logid                  Int         @id @default(autoincrement())
   modulestateid       Int
   running_timestart   DateTime
   running_timeend     DateTime?
+  noofdata            Int
   status              Boolean     @default(true)
   createddate         DateTime    @default(now())
-  modulestate         Modulestate @relation(fields: [modulestateid], references: [id], onDelete: Cascade)
+  modulestate         Modulestate @relation(fields: [modulestateid], references: [modulestateid], onDelete: Cascade)
 }

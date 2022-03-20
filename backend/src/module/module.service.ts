@@ -17,20 +17,33 @@ export class ModuleService {
   }
  
   async findAll() {
-     
-    return this.prismaService.module.findMany(); ;
+     // return this.prismaService.module.findMany();  
+      return this.prismaService.$queryRaw 
+      `SELECT a.moduleid, description,modstatus,
+      b.modulename,type, 
+      schedule_timestart,
+      schedule_timeend, 
+      operating_condition,  
+      typemax, 
+      typemins, 
+      modulestateid
+    FROM public."Modulestate" a
+    inner join public."Module" b
+    on a.moduleid = b.moduleid`;
+
+
   }
 
   async findOne(id: number) {
-    return this.prismaService.module.findUnique({ where: {id: id}});
+    return this.prismaService.module.findUnique({ where: {moduleid: id}});
   }
 
   async update(id: number, updateModuleDto: UpdateModuleDto) {
-    const Update= await this.prismaService.module.update({ data: updateModuleDto ,where: { id: id}});
+    const Update= await this.prismaService.module.update({ data: updateModuleDto ,where: { moduleid: id}});
     return Update ;
   }
 
   async remove(id: number) {
-    return this.prismaService.module.delete({ where: { id: id}});
+    return this.prismaService.module.delete({ where: { moduleid: id}});
   }
 }
