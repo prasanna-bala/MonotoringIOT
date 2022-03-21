@@ -20,7 +20,7 @@ export class ModuleService {
      // return this.prismaService.module.findMany();  
       return this.prismaService.$queryRaw 
       `SELECT a.moduleid, description,modstatus,
-      b.modulename,type, 
+      b.modulename as name ,type, 
       schedule_timestart,
       schedule_timeend, 
       operating_condition,  
