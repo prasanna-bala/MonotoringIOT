@@ -1,25 +1,8 @@
-import React, { useEffect, useState,useReducer } from "react";
+import React, { useEffect, useState ,Fragment} from "react";
 import { Link, useParams } from "react-router-dom";
-
+import ModuleLogDetails from "./ModuleLogDetails";
 import "../../src/App.css";
-
-const formReducer = (state, event) => {
-    if (event.reset) {
-      return {
-        modulename: '',
-        description: 0,
-        type: '',
-        timestart: 0,
-        timeend: '',
-        temprature: 0,
-        status: false,
-      }
-    }
-    return {
-      ...state,
-      [event.name]: event.value
-    }
-}
+ 
 const Modulelog = () => {
     const red = { background: 'red' };
     const green = { background: 'green' };
@@ -48,26 +31,22 @@ const Modulelog = () => {
                     setModstatus(result[0].modstatus);
                     setModulestateid(result[0].modulestateid);
                  
-                    // console.log(result);
+                    console.log(modulestateid);
                 },
 
                 (error) => setError(error),
             );
 
-            fetch(`http://localhost:5000/Modulestatelog/${id}`)
+            fetch(`http://localhost:5000/modulelog/${modulestateid}`)
 
             .then((res) => res.json())
             .then(
                 (result) => {
 
                     setModuleslog(result);
-                    // setModulename(result[0].name);
-                    // setModdesc(result[0].description);
-                    // setType(result[0].type);
-                    // setModstatus(result[0].modstatus);
-                    // setModulestateid(result[0].modulestateid);
-                 
-                    console.log(result);
+                     
+                    //console.log(modulestateid);
+                    // console.log(result);
                 },
 
                 (error) => setError(error),
@@ -77,12 +56,14 @@ const Modulelog = () => {
  
 
 
-const [formData, setFormData] = useReducer(formReducer, {});
+const [formData, setFormData] =  useState([modulestateid]);
 const [submitting, setSubmitting] = useState(false);
 const [module, setmodule] = useState(false);
+ 
 
-  const handleSubmit = event => {
+  const handleLogStart = event => {
       event.preventDefault();
+      
       setSubmitting(true);
 
       setTimeout(() => { 
@@ -91,7 +72,7 @@ const [module, setmodule] = useState(false);
       }, 3000);
 
 
-      fetch(`http://localhost:5000/module`, {
+      fetch(`http://localhost:5000/modulelog`, {
           method: "POST",
           headers: {
           "Content-Type": "application/json",
@@ -154,26 +135,39 @@ const [module, setmodule] = useState(false);
         </tbody>
           </table>
           
-          <button type="submit" onClick={handleSubmit}>Submit</button>
+          <button type="submit" onClick={handleLogStart(module.modulestateid)}>Start</button>
+          {/* <button type="submit" onClick={handleSubmit}>Stop</button> */}
+
           </fieldset>
           </form>
         <div className="app-container">
             <form >
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Type</th>
-                            <th>Module Status</th>
-                            <th>Schedule timestart</th>
-                            <th>Schedule timeend</th>
-                            <th>Operating condition</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+
+            <div>  
+    <table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Running_timestart</th>
+            <th>Running_timeend</th>
+            <th> Status</th>
+            <th>No of Data</th>
+             
+        </tr>
+    </thead>
+    <tbody>
+
+            {moduleslog.map((moduleslo) => (
+            <Fragment>
+                 <ModuleLogDetails
+                 moduleslo={moduleslo} ></ModuleLogDetails>
+         
+            </Fragment>
+            ))}
+    </tbody>
+    
+        </table>
+    </div>
             </form>
         </div>
 </div>

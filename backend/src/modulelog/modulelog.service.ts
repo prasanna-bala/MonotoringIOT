@@ -16,12 +16,19 @@ export class ModulelogService {
 
  async findAll() {
     return  this.prismaService.modulestatelog.findMany();
-    console.log('helloWorld)');
+  
   }
 
   findMany(id: number) {
-    console.log(':::::\n', id, '\n:::::');
-    return this.prismaService.modulestatelog.findMany({ where: { modulestateid: id } });
+ 
+      return this.prismaService.$queryRaw 
+      `SELECT*
+    FROM public."Modulestatelog" a 
+    where  a.modulestateid = ${id}`;
+  
+     // return this.prismaService.module.findUnique({ where: {moduleid: id}});
+  
+  //  return this.prismaService.modulestatelog.findMany({ where: { modulestateid: id } });
   }
 
   update(id: number, updateModulelogDto: UpdateModulelogDto) {
