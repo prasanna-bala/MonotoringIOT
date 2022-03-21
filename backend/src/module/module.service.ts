@@ -35,7 +35,21 @@ export class ModuleService {
   }
 
   async findOne(id: number) {
-    return this.prismaService.module.findUnique({ where: {moduleid: id}});
+    return this.prismaService.$queryRaw 
+    `SELECT a.moduleid, description,modstatus,
+    b.modulename as name ,type, 
+    schedule_timestart,
+    schedule_timeend, 
+    operating_condition,  
+    typemax, 
+    typemins, 
+    modulestateid
+  FROM public."Modulestate" a
+  inner join public."Module" b
+  on a.moduleid = b.moduleid
+  where  a.moduleid = ${id}`;
+
+   // return this.prismaService.module.findUnique({ where: {moduleid: id}});
   }
 
   async update(id: number, updateModuleDto: UpdateModuleDto) {
