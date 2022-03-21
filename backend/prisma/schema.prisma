@@ -32,13 +32,13 @@ model Modulestate {
   createddate         DateTime         @default(now())
   updateddate         DateTime?
   module              Module           @relation(fields: [moduleid], references: [moduleid], onDelete: Cascade)
-  modulestatelog      Modulestatelog[]
+  modulestatelog      Modulelog[]
 }
 
-model Modulestatelog {
+model Modulelog {
   logid                  Int         @id @default(autoincrement())
   modulestateid       Int
-  running_timestart   DateTime
+  running_timestart   DateTime      @default(now())
   running_timeend     DateTime?
   noofdata            Int
   status              Boolean     @default(true)

@@ -1,4 +1,4 @@
-import React, { useState, Fragment ,useEffect} from "react";
+import React, {  Fragment } from "react";
  
 const ModuleLogDetails = ( {moduleslo} ) => {
     const red = {background: 'red' };

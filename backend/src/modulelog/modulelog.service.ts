@@ -9,26 +9,26 @@ export class ModulelogService {
 
   constructor(private prismaService: PrismaService){ }
 
-  create(createModulelogDto: CreateModulelogDto) {
-    return 'This action adds a new modulelog';
-    console.log('helloWorld)');
+ 
+
+  async  create(createModulelogDto: CreateModulelogDto) {
+    console.log(createModulelogDto);
+     const insert= await this.prismaService.modulelog.create({ data: createModulelogDto});
+     return insert ;
   }
 
  async findAll() {
-    return  this.prismaService.modulestatelog.findMany();
+    return  this.prismaService.modulelog.findMany();
   
   }
 
-  findMany(id: number) {
+  async findMany(id: number) {
  
-      return this.prismaService.$queryRaw 
-      `SELECT*
-    FROM public."Modulestatelog" a 
-    where  a.modulestateid = ${id}`;
+ 
   
      // return this.prismaService.module.findUnique({ where: {moduleid: id}});
   
-  //  return this.prismaService.modulestatelog.findMany({ where: { modulestateid: id } });
+  return this.prismaService.modulelog.findMany({ where: { modulestateid: id } });
   }
 
   update(id: number, updateModulelogDto: UpdateModulelogDto) {

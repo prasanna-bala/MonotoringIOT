@@ -13,97 +13,94 @@ const Modulelog = () => {
     const [modulename, setModulename] = useState([]);
     const [moddesc,setModdesc] = useState([]);
     const [modstatus,setModstatus] = useState([]);
-    const [modulestateid,setModulestateid] = useState([]);
+    const  modulestateid = 0;
     const [type, setType]  = useState([]);
     const [moduleslog,setModuleslog] = useState([]);
+    
     useEffect(() => {
-
+        
         fetch(`http://localhost:5000/module/${id}`)
 
             .then((res) => res.json())
             .then(
                 (result) => {
 
-                    setModules(result);
-                    setModulename(result[0].name);
-                    setModdesc(result[0].description);
-                    setType(result[0].type);
-                    setModstatus(result[0].modstatus);
-                    setModulestateid(result[0].modulestateid);
-                 
-                    console.log(modulestateid);
+                setModules(result);
+
+                setModulename(result[0].name);
+                setModdesc(result[0].description);
+                setType(result[0].type);
+                setModstatus(result[0].modstatus);
+                const modulestateid = (result[0].modulestateid);
+ 
                 },
 
                 (error) => setError(error),
             );
 
-            fetch(`http://localhost:5000/modulelog/${modulestateid}`)
+           
+
+            fetch(`http://localhost:5000/modulelog/${id}`,{
+            method: "Get"} )
 
             .then((res) => res.json())
             .then(
-                (result) => {
+            (result) => {
 
-                    setModuleslog(result);
-                     
-                    //console.log(modulestateid);
-                    // console.log(result);
-                },
+            setModuleslog(result);
 
-                (error) => setError(error),
+            },
+
+            (error) => setError(error),
             );
 
     }, []);
+  
  
-
-
-const [formData, setFormData] =  useState([modulestateid]);
-const [submitting, setSubmitting] = useState(false);
-const [module, setmodule] = useState(false);
+const [module, setModule] = useState(false);
+const [modulelog, setModulelog] = useState(false);
  
-
   const handleLogStart = event => {
-      event.preventDefault();
-      
-      setSubmitting(true);
+    const newlog={ modulestateid: +id ,
+        noofdata: 1}
 
-      setTimeout(() => { 
-        setSubmitting(false); 
-        setFormData({reset: true})
-      }, 3000);
+        fetch("http://localhost:5000/modulelog", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(newlog),
+            })
+            .then((res) => res.json())
+            .then((result) => {
 
+            if (result.hasOwnProperty("code")) return;
 
-      fetch(`http://localhost:5000/modulelog`, {
-          method: "POST",
-          headers: {
-          "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify(formData),
-      })
-      .then((res) => res.json())
-      .then((result) => {
-
-      if (result.hasOwnProperty("code")) return;
-
-      let arr = JSON.parse(JSON.stringify(module));
-      arr.unshift(result);
-      setmodule(arr);
-      });
+            let arr = JSON.parse(JSON.stringify(modulelog));
+            arr.unshift(result);
+            setModule(arr);
+        });
 
   }
+const  handleSubmit = event => {
+    const newlog={ modulestateid: +id ,
+        noofdata: 1}
 
-  const handleChange = event => {
-    const isCheckbox = event.target.type === 'checkbox';
-    setFormData({
-      name: event.target.name,
+        fetch(`http://localhost:5000/modulelog/${id}`, {
+            method: "PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(newlog),
+            })
+            .then((res) => res.json())
+            .then((result) => {
 
-      value: isCheckbox ? event.target.checked : event.target.value.toString(),
-    });
+            if (result.hasOwnProperty("code")) return;
+
+            let arr = JSON.parse(JSON.stringify(modulelog));
+            arr.unshift(result);
+            setModule(arr);
+        });
 
   }
  
-
-
     return (
         <div>
           <form >
@@ -114,29 +111,29 @@ const [module, setmodule] = useState(false);
        
             <tr>
               <td className="left">  <label>Module Name:</label></td>
-              <td className="right"> <input type="text" name="modulename" onChange={handleChange} value={modulename}/> </td>
+              <td className="right"> <label>{modulename}</label> </td>
             </tr>
             <tr>
               <td>  <label>Module Description:</label></td>
-              <td> <input type="text" name="description" onChange={handleChange} value={moddesc || ''} /></td>
+              <td> {moddesc || ''} </td>
             </tr>
 
             <tr>
               <td>  <label>Module Type:</label></td>
-              <td> <input type="text" name="type" onChange={handleChange} value={type || ''} /></td>
+              <td>  <label>{type} </label> </td>
             </tr>
  
             <tr>
               <td>  <label>Module Status:</label></td>
-              <td>  <input type="checkbox" name="modstatus" onChange={handleChange} checked={modstatus || ''} />
-              </td>
+              <td>   <label>{modstatus} </label> </td>
+              
             </tr>
        
         </tbody>
           </table>
           
-          <button type="submit" onClick={handleLogStart(module.modulestateid)}>Start</button>
-          {/* <button type="submit" onClick={handleSubmit}>Stop</button> */}
+          <button type="submit" onClick={handleLogStart}>Start</button>
+        <button type="submit" onClick={handleSubmit}>Stop</button>  
 
           </fieldset>
           </form>
